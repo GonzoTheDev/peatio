@@ -11,7 +11,6 @@ module API::V2
       mount Account::Withdraws
       mount Account::Transactions
       mount Account::Stats
-      mount Account::InternalTransfers
     end
   end
 end

@@ -133,14 +133,6 @@ class Member < ApplicationRecord
       Member.find_by(id: member_id)&.uid
     end
 
-    def find_by_username_or_uid(uid_or_username)
-      if Member.find_by(uid: uid_or_username).present?
-        Member.find_by(uid: uid_or_username)
-      elsif Member.find_by(username: uid_or_username).present?
-        Member.find_by(username: uid_or_username)
-      end
-    end
-
     # Create Member object from payload
     # == Example payload
     # {
@@ -230,7 +222,6 @@ end
 #
 # Indexes
 #
-#  index_members_on_email     (email) UNIQUE
-#  index_members_on_uid       (uid) UNIQUE
-#  index_members_on_username  (username) UNIQUE
+#  index_members_on_email  (email) UNIQUE
+#  index_members_on_uid    (uid) UNIQUE
 #

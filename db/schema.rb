@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_02_120855) do
+ActiveRecord::Schema.define(version: 2021_01_28_083207) do
 
   create_table "accounts", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "member_id", null: false
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 2021_03_02_120855) do
     t.decimal "amount", precision: 32, scale: 16, null: false
     t.decimal "fee", precision: 32, scale: 16, null: false
     t.string "address", limit: 95
-    t.text "from_addresses"
+    t.string "from_addresses", limit: 1000
     t.string "txid", limit: 128, collation: "utf8_bin"
     t.integer "txout"
     t.string "aasm_state", limit: 30, null: false
@@ -170,16 +170,6 @@ ActiveRecord::Schema.define(version: 2021_03_02_120855) do
     t.datetime "updated_at", null: false
     t.index ["currency_id"], name: "index_expenses_on_currency_id"
     t.index ["reference_type", "reference_id"], name: "index_expenses_on_reference_type_and_reference_id"
-  end
-
-  create_table "internal_transfers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "currency_id", null: false
-    t.decimal "amount", precision: 32, scale: 16, null: false
-    t.bigint "sender_id", null: false
-    t.bigint "receiver_id", null: false
-    t.integer "state", default: 1, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -445,16 +435,6 @@ ActiveRecord::Schema.define(version: 2021_03_02_120855) do
     t.index ["kind", "status"], name: "index_wallets_on_kind_and_currency_id_and_status"
     t.index ["kind"], name: "index_wallets_on_kind"
     t.index ["status"], name: "index_wallets_on_status"
-  end
-
-  create_table "whitelisted_smart_contracts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "description"
-    t.string "address", null: false
-    t.string "state", limit: 30, null: false
-    t.string "blockchain_key", limit: 32, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["address", "blockchain_key"], name: "index_whitelisted_smart_contracts_on_address_and_blockchain_key", unique: true
   end
 
   create_table "withdraw_limits", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

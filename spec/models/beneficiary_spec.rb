@@ -100,12 +100,10 @@ describe Beneficiary, 'Callback' do
   context 'before_create' do
     subject { build(:beneficiary) }
     it 'generates sent_at' do
-      Timecop.freeze do
-        expect(subject.sent_at).to be_nil
-        subject.save!
-        expect(subject.sent_at).to_not be_nil
-        expect(subject.sent_at).to eq(subject.created_at)
-      end
+      expect(subject.sent_at).to be_nil
+      subject.save!
+      expect(subject.sent_at).to_not be_nil
+      expect(subject.sent_at.round).to eq(subject.created_at.round)
     end
   end
 end

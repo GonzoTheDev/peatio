@@ -2,16 +2,14 @@ class BlockchainService
   Error = Class.new(StandardError)
   BalanceLoadError = Class.new(StandardError)
 
-  attr_reader :blockchain, :whitelisted_smart_contract, :currencies, :adapter
+  attr_reader :blockchain, :currencies, :adapter
 
   def initialize(blockchain)
     @blockchain = blockchain
     @currencies = blockchain.currencies.deposit_enabled
-    @whitelisted_addresses = blockchain.whitelisted_smart_contracts.active
     @adapter = Peatio::Blockchain.registry[blockchain.client.to_sym].new
     @adapter.configure(server: @blockchain.server,
-                       currencies: @currencies.map(&:to_blockchain_api_settings),
-                       whitelisted_addresses: @whitelisted_addresses)
+                       currencies: @currencies.map(&:to_blockchain_api_settings))
   end
 
   def latest_block_number

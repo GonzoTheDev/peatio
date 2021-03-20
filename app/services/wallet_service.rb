@@ -17,8 +17,7 @@ class WalletService
                        currency: withdrawal.currency.to_blockchain_api_settings)
     transaction = Peatio::Transaction.new(to_address: withdrawal.rid,
                                           amount:     withdrawal.amount,
-                                          currency_id: withdrawal.currency_id,
-                                          options: { tid: withdrawal.tid })
+                                          currency_id: withdrawal.currency_id)
     transaction = @adapter.create_transaction!(transaction)
     save_transaction(transaction.as_json.merge(from_address: @wallet.address), withdrawal) if transaction.present?
     transaction
